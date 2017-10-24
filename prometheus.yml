@@ -1,0 +1,5 @@
+---
+- name: Setup prometheus
+  hosts: prometheus
+  roles:
+    - prometheus

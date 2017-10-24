@@ -1,0 +1,88 @@
+---
+driver:
+  name: vagrant
+
+driver_config:
+  customize:
+    natdnsproxy1: "off"
+    natdnshostresolver1: "on"
+
+provisioner:
+  name: ansible_push
+  playbook: prometheus.yml
+  sudo: true
+  chef_bootstrap_url: false
+  ansible_config: ansible.cfg
+
+verifier:
+  name: goss
+  goss_version: v0.3.4
+
+platforms:
+  # - name: centos-7.2
+  #   driver_plugin: vagrant
+  #   driver:
+  #     provider: vmware_fusion
+  #     box: default-centos-72
+  #     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/vmware/opscode_centos-7.2_chef-provisionerless.box
+  #     box_check_update: 'true'
+
+  # - name: ubuntu-14.04
+  #   driver_plugin: vagrant
+  #   driver:
+  #     provider: vmware_fusion
+  #     box: default-ubuntu-1404
+  #     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/vmware/opscode_ubuntu-14.04_chef-provisionerless.box
+  #     box_check_update: 'true'
+
+  # - name: ubuntu-14-04
+  #   driver_plugin: vagrant
+  #   driver_config:
+  #     provider: virtualbox
+  #     box: ubuntu/trusty64
+  #   provisioner:
+  #     ansible_config: ansible.cfg
+  #     extra_vars: "@inventory/devtest/group_vars/all/env"
+  #     use_instance_name: true
+  #     groups:
+  #       mattermost-web:
+  #         - web-ubuntu-14-04
+  #       mattermost-app:
+  #         - mattermost-ubuntu-14-04
+  #         - mattermost2-ubuntu-14-04
+  #         - mattermost3-ubuntu-14-04
+  #       mattermost-db:
+  #         - mysql-ubuntu-14-04
+
+  - name: debian-8
+    driver_plugin: vagrant
+    driver_config:
+      provider: virtualbox
+      box: debian/jessie64
+    provisioner:
+      ansible_config: ansible.cfg
+      # extra_vars: "@inventory/devtest/group_vars/all/env"
+      use_instance_name: true
+      groups:
+        prometheus:
+          - prometheus-debian-8
+        alertmanager:
+          - prometheus-debian-8
+
+  # - name: ubuntu-16.04
+  #   driver_plugin: vagrant
+  #   driver:
+  #     provider: vmware_fusion
+  #     box: default-ubuntu-1604
+  #     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/vmware/opscode_ubuntu-16.04_chef-provisionerless.box
+  #     box_check_update: 'true'
+
+suites:
+  - name: prometheus
+    driver:
+      cachier: true
+      network:
+      - [ "private_network", {ip: "172.16.1.100"} ]
+      customize:
+        memory: 512
+        cpus: 1
