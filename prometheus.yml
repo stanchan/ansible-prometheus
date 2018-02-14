@@ -3,3 +3,8 @@
   hosts: prometheus
   roles:
     - prometheus
+
+- name: Setup grafana
+  hosts: grafana
+  roles:
+    - grafana

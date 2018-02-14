@@ -61,7 +61,7 @@ platforms:
       box: debian/jessie64
     provisioner:
       ansible_config: ansible.cfg
-      # extra_vars: "@inventory/devtest/group_vars/all/env"
+      extra_vars: "@inventory/devtest/group_vars/all/env"
       use_instance_name: true
       groups:
         prometheus:
