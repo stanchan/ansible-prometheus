@@ -1,18 +1,18 @@
 ---
-# - name: setup docker host
-#   vars:
-#     install_docker: yes
-#   import_playbook: docker_setup.yml
+- name: setup docker host
+  vars:
+    install_docker: yes
+  import_playbook: docker_setup.yml
 
-# - name: Setup prometheus
-#   hosts: prometheus
-#   roles:
-#     - prometheus
+- name: Setup prometheus
+  hosts: prometheus
+  roles:
+    - prometheus
 
-# - name: Setup grafana
-#   hosts: grafana
-#   roles:
-#     - grafana
+- name: Setup grafana
+  hosts: grafana
+  roles:
+    - grafana
 
 - name: Setup crabby
   hosts: crabby,selenium_agent
