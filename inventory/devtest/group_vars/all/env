@@ -1,4 +1,6 @@
 ---
+required_packages: unzip
+
 prometheus_scrape:
   - promhost.chanfx.com:9100
 
@@ -6,6 +8,9 @@ grafana_host: promhost.chanfx.com
 
 grafana_admin_user: admin
 grafana_admin_password: password
+
+pushgateway_external_hostname: promhost.chanfx.com
+pushgateway_port: 9091
 
 grafana_configuration:
   server:
@@ -32,3 +37,20 @@ grafana_datasources:
       scrapeInterval: "15s"
     version: 1
     editable: true
+
+crabby_configuration:
+  jobs:
+    - name: another_page
+      type: simple
+      url: https://some-other-site.org/some/page
+      interval: 10
+  storage:
+    prometheus:
+      host: "{{ pushgateway_external_hostname }}"
+      port: "{{ pushgateway_port }}"
+      metric-namespace: crabby.crabby-sfc-1
+  report-internal-metrics: true
+  internal-metrics-gathering-interval: 15
+
+crabby_network: default
+crabby_network_type: bridge

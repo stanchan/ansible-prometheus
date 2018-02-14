@@ -4,3 +4,9 @@
 [submodule "roles/grafana"]
 	path = roles/grafana
 	url = https://github.com/stanchan/ansible-role-grafana.git
+[submodule "roles/docker"]
+	path = roles/docker
+	url = https://github.com/stanchan/ansible-role-docker.git
+[submodule "roles/crabby"]
+	path = roles/crabby
+	url = https://github.com/stanchan/ansible-role-crabby.git
