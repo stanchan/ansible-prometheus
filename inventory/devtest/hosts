@@ -1,0 +1,25 @@
+promhost.chanfx.com ansible_host_ip=172.16.1.100 ansible_user=vagrant ansible_become=true
+
+[docker]
+promhost.chanfx.com
+
+[prometheus]
+promhost.chanfx.com
+
+[alertmanager]
+promhost.chanfx.com
+
+[pushgateway]
+promhost.chanfx.com
+
+[node_exporter]
+promhost.chanfx.com
+
+[grafana]
+promhost.chanfx.com
+
+[crabby]
+promhost.chanfx.com
+
+[selenium_agent]
+promhost.chanfx.com
