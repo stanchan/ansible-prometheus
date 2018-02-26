@@ -40,15 +40,18 @@ grafana_datasources:
 
 crabby_configuration:
   jobs:
-    - name: another_page
-      type: simple
-      url: https://some-other-site.org/some/page
-      interval: 10
+    - name: google.com
+      type: selenium
+      url: https://google.com
+      interval: 30
+  selenium:
+    url: http://localhost:4444/wd/hub
+    job-stagger-offset: 30
   storage:
     prometheus:
       host: "{{ pushgateway_external_hostname }}"
       port: "{{ pushgateway_port }}"
-      metric-namespace: crabby.crabby-sfc-1
+      metric-namespace: crabby_sfc_1
   report-internal-metrics: true
   internal-metrics-gathering-interval: 15
 
