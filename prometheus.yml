@@ -5,7 +5,7 @@
   import_playbook: docker_setup.yml
 
 - name: Setup prometheus
-  hosts: prometheus
+  hosts: prometheus,alertmanager,pushgateway,node_exporter
   roles:
     - prometheus
 
