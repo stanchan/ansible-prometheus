@@ -1,25 +1,25 @@
-promhost.chanfx.com ansible_host_ip=172.16.1.100 ansible_user=vagrant ansible_become=true
+promhost.shift-labs.com ansible_host_ip=172.16.1.100 ansible_user=vagrant ansible_become=true
 
 [docker]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [prometheus]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [alertmanager]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [pushgateway]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [node_exporter]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [grafana]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [crabby]
-promhost.chanfx.com
+promhost.shift-labs.com
 
 [selenium_agent]
-promhost.chanfx.com
+promhost.shift-labs.com

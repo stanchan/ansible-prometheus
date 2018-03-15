@@ -1,6 +1,7 @@
 .DS_Store
 .vagrant
 **/*.retry
+inventory/production/
 inventory/**/hosts.bak
 inventory/vagrant_ansible_inventory
 inventory/**/group_vars/fake_hosts.yml
