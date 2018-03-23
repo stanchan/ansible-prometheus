@@ -1,25 +1,25 @@
-promhost.shift-labs.com ansible_host_ip=172.16.1.100 ansible_user=vagrant ansible_become=true
+prometheus.shift-labs.com ansible_host_ip=172.16.1.102 ansible_user=vagrant ansible_become=true
 
 [docker]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [prometheus]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [alertmanager]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [pushgateway]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [node_exporter]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [grafana]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [crabby]
-promhost.shift-labs.com
+prometheus.shift-labs.com
 
 [selenium_agent]
-promhost.shift-labs.com
+prometheus.shift-labs.com
