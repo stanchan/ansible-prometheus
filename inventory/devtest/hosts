@@ -1,4 +1,7 @@
-prometheus.shift-labs.com ansible_host_ip=172.16.1.102 ansible_user=vagrant ansible_become=true
+solr.shift-labs.com ansible_host_ip=172.16.1.100 ansible_user=vagrant ansible_become=true
+solr2.shift-labs.com ansible_host_ip=172.16.1.101 ansible_user=vagrant ansible_become=true
+solr3.shift-labs.com ansible_host_ip=172.16.1.102 ansible_user=vagrant ansible_become=true
+prometheus.shift-labs.com ansible_host_ip=172.16.1.103 ansible_user=vagrant ansible_become=true
 
 [docker]
 prometheus.shift-labs.com
@@ -14,6 +17,22 @@ prometheus.shift-labs.com
 
 [node_exporter]
 prometheus.shift-labs.com
+solr.shift-labs.com
+solr2.shift-labs.com
+solr3.shift-labs.com
+
+[blackbox_exporter]
+prometheus.shift-labs.com
+
+[solr_exporter]
+solr.shift-labs.com
+solr2.shift-labs.com
+solr3.shift-labs.com
+
+[jmx_exporter]
+solr.shift-labs.com
+solr2.shift-labs.com
+solr3.shift-labs.com
 
 [grafana]
 prometheus.shift-labs.com
@@ -21,5 +40,14 @@ prometheus.shift-labs.com
 [crabby]
 prometheus.shift-labs.com
 
-[selenium_agent]
+[selenium_caddy]
+prometheus.shift-labs.com
+
+[selenium_hub]
+prometheus.shift-labs.com
+
+[selenium_chrome]
+prometheus.shift-labs.com
+
+[selenium_firefox]
 prometheus.shift-labs.com

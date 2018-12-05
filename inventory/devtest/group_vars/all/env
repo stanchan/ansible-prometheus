@@ -1,21 +1,75 @@
 ---
+env: devtest
 required_packages: unzip
 
-prometheus_scrape:
-  - promhost.shift-labs.com:9100
+prometheus_url: "https://s3-us-west-2.amazonaws.com/shift-release-repo/prometheus/{{ prometheus_package }}"
+alertmanager_url: "https://s3-us-west-2.amazonaws.com/shift-release-repo/prometheus/{{ alertmanager_package }}"
+pushgateway_url: "https://s3-us-west-2.amazonaws.com/shift-release-repo/prometheus/{{ pushgateway_package }}"
+node_exporter_url: "https://s3-us-west-2.amazonaws.com/shift-release-repo/prometheus/{{ node_exporter_package }}"
+solr_exporter_url: "https://s3-us-west-2.amazonaws.com/shift-release-repo/prometheus/{{ solr_exporter_package }}"
 
-grafana_host: promhost.chanfx.com
+prometheus_hosts:
+  - "prometheus.shift-labs.com:{{ prometheus_port }}"
+
+prometheus_external_hostname: prometheus.shift-labs.com
+prometheus_port: 9090
+
+prometheus_alertmanager_host: localhost
+prometheus_alertmanager_port: 9093
+
+pushgateway_external_hostname: prometheus.shift-labs.com
+pushgateway_port: 9091
+
+prometheus_scrape:
+  - role: 'prometheus_statistics'
+    type: 'prometheus'
+    configs:
+      - env: 'devtest'
+        nodes: "{{ groups['prometheus'] | map('extract', hostvars, 'inventory_hostname') | map('regex_replace', '^(.*)$', '\\1:{}'.format(prometheus_port)) | list }}"
+  - role: 'alertmanager'
+    type: 'alertmanager'
+    configs:
+      - env: 'devtest'
+        nodes: "{{ groups['alertmanager'] | map('extract', hostvars, 'inventory_hostname') | map('regex_replace', '^(.*)$', '\\1:{}'.format(prometheus_alertmanager_port)) | list }}"
+  - role: 'grafana'
+    type: 'grafana'
+    configs:
+      - env: 'devtest'
+        nodes: "{{ groups['grafana'] | map('extract', hostvars, 'inventory_hostname') | map('regex_replace', '^(.*)$', '\\1:{}'.format(grafana_port)) | list }}"
+  - role: "pushgateway_{{ pushgateway_external_hostname.split('.')[0] }}"
+    type: 'pushgateway'
+    configs:
+      - env: 'devtest'
+        nodes: [ "{{ pushgateway_external_hostname }}:{{ pushgateway_port }}" ]
+  - role: 'node'
+    type: 'node-exporter'
+    configs:
+      - env: 'devtest'
+        nodes: "{{ groups['node_exporter'] | map('extract', hostvars, 'inventory_hostname') | map('regex_replace', '^(.*)$', '\\1:{}'.format(node_exporter_port)) | list }}"
+  - role: 'solr'
+    type: 'solr-exporter'
+    configs:
+      - env: 'devtest'
+        nodes: "{{ groups['solr_exporter'] | map('extract', hostvars, 'inventory_hostname') | map('regex_replace', '^(.*)$', '\\1:{}'.format(solr_exporter_port)) | list }}"
+  - role: 'zookeeper'
+    type: 'jmx-exporter'
+    configs:
+      - env: 'devtest'
+        nodes: "{{ groups['jmx_exporter'] | map('extract', hostvars, 'inventory_hostname') | map('regex_replace', '^(.*)$', '\\1:{}'.format(zookeeper_jmx_exporter_port)) | list }}"
+
+grafana_external_hostname: prometheus.shift-labs.com
+grafana_port: 3000
+
+grafana_hosts:
+  - "prometheus.shift-labs.com:{{ grafana_port }}"
 
 grafana_admin_user: admin
 grafana_admin_password: password
 
-pushgateway_external_hostname: promhost.shift-labs.com
-pushgateway_port: 9091
-
 grafana_configuration:
   server:
     http_addr: 0.0.0.0
-    http_port: 3000
+    http_port: "{{ grafana_port }}"
   paths:
     data: "{{ grafana_data_path }}"
     logs: "{{ grafana_log_path }}"
@@ -27,16 +81,15 @@ grafana_configuration:
     admin_password: "{{ grafana_admin_password }}"
 
 grafana_datasources:
-  datasources:
   - name: Prometheus
     type: prometheus
-    access: direct
+    access: proxy
     org_id: 1
-    url: http://172.16.1.100:9090
-    json_data:
+    url: http://127.0.0.1:9090
+    jsonData:
       scrapeInterval: "15s"
+    editable: false
     version: 1
-    editable: true
 
 crabby_configuration:
   jobs:
@@ -57,3 +110,5 @@ crabby_configuration:
 
 crabby_network: default
 crabby_network_type: bridge
+
+zookeeper_jmx_exporter_port: 9404
