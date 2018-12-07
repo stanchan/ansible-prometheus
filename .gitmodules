@@ -10,3 +10,6 @@
 [submodule "roles/crabby"]
 	path = roles/crabby
 	url = https://github.com/stanchan/ansible-role-crabby.git
+[submodule "roles/pip"]
+	path = roles/pip
+	url = https://github.com/stanchan/ansible-role-pip.git
