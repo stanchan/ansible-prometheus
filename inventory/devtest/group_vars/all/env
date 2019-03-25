@@ -91,6 +91,9 @@ grafana_datasources:
     editable: false
     version: 1
 
+grafana_default_environment: devtest
+grafana_solr_default_collection: shift
+
 crabby_configuration:
   jobs:
     - name: google.com
